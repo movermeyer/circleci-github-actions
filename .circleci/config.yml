@@ -4,8 +4,8 @@ orbs:
   # Replace this with your own!
   github-actions: movermeyer/github-actions@<<pipeline.parameters.dev-orb-version>>
   orb-tools: circleci/orb-tools@10.0
-  bats: circleci/bats@1.0
-  shellcheck: circleci/shellcheck@2.0
+  # bats: circleci/bats@1.0
+  # shellcheck: circleci/shellcheck@2.0
 
 # Pipeline Parameters
 ## These parameters are used internally by orb-tools. Skip to the Jobs section.
@@ -29,7 +29,6 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - github-actions/repository_dispatch
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -39,12 +38,12 @@ workflows:
     jobs:
       - orb-tools/lint # Lint Yaml files
       - orb-tools/pack # Pack orb source
-      - shellcheck/check:
-          dir: ./src/scripts
-          exclude: SC2148
-      # optional: Run BATS tests against your scripts
-      - bats/run:
-          path: ./src/tests
+      # - shellcheck/check:
+      #     dir: ./src/scripts
+      #     exclude: SC2148
+      # # optional: Run BATS tests against your scripts
+      # - bats/run:
+      #     path: ./src/tests
       # If you accept building open source forks, protect your secrets behind a restricted context.
       # A job containing restricted context (which holds your orb publishing credentials) may only be accessed by a user with proper permissions.
       # An open source user may begin a pipeline with a PR, and once the pipeline is approved by an authorized user at this point, the pipeline will continue with the proper context permissions.
@@ -53,8 +52,8 @@ workflows:
           requires:
             - orb-tools/lint
             - orb-tools/pack
-            - bats/run
-            - shellcheck/check
+            # - bats/run
+            # - shellcheck/check
       # Publish development version(s) of the orb.
       - orb-tools/publish-dev:
           orb-name: movermeyer/github-actions
@@ -88,7 +87,8 @@ workflows:
           context: orb-publishing
           add-pr-comment: false
           fail-if-semver-not-indicated: true
-          publish-version-tag: false
+          publish-version-tag: true
+          ssh-fingerprints: "ee:d0:7b:96:64:22:ae:44:75:1f:a7:6c:3c:cc:6f:b1"
           requires:
             - integration-test-1
           filters:

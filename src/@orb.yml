@@ -1,0 +1,9 @@
+version: 2.1
+
+description: >
+  Interact with GitHub Actions from CircleCI
+
+# This information will be displayed in the orb registry and is not mandatory.
+display:
+  home_url: "https://github.com/movermeyer/circleci-github-actions"
+  source_url: "https://github.com/movermeyer/circleci-github-actions"

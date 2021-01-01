@@ -39,7 +39,7 @@ Commands need to authenticate with GitHub in order to work.
   * Make sure to copy down the access token it generates.
 2. Create a new CircleCI environment variable, either on the CircleCI project, or within a CircleCI scope used by the CircleCI project.
   * Name it `GITHUB_PERSONAL_ACCESS_TOKEN` and copy the access token that GitHub generated in the last step.
-    * If for some reason your project/scope already has a `GITHUB_PERSONAL_ACCESS_TOKEN`, use a different name instead. You will use that new name as an override when calling commands.
+    * If for some reason your project/scope already has a `GITHUB_PERSONAL_ACCESS_TOKEN`, use a different name instead. You will use that new name to override the `github_personal_access_token` parameter when calling commands.
 
 ## Commands
 
@@ -51,11 +51,11 @@ This sends a [`repository_dispatch`](https://docs.github.com/en/free-pro-team@la
 
 #### Parameters
 
-| Parameter  | Description                                                                                                                                                                                            | Required | Default                        | Example               |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------ | --------------------- |
-| repo_name  | The organization and repo name to trigger the `repository_dispatch` event for                                                                                                                          | Yes      | N/A                            | `octocat/hello-world` |
-| event_type | The ['event_type'](https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-a-repository-dispatch-event) parameter to send. Arbitry string that GitHub Actions can use to filter on | Yes      | N/A                            | `octocat/hello-world` |
-| repo_name  | The name of the environment variable containing the GitHub Personal Access Token. See [Authentication](#authentication)                                                                                | No       | `GITHUB_PERSONAL_ACCESS_TOKEN` |                       |
+| Parameter                    | Description                                                                                                                                                                                            | Required | Default                        | Example               |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------ | --------------------- |
+| repo_name                    | The organization and repo name to trigger the `repository_dispatch` event for                                                                                                                          | Yes      | N/A                            | `octocat/hello-world` |
+| event_type                   | The ['event_type'](https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-a-repository-dispatch-event) parameter to send. Arbitry string that GitHub Actions can use to filter on | Yes      | N/A                            | `octocat/hello-world` |
+| github_personal_access_token | The name of the environment variable containing the GitHub Personal Access Token. See [Authentication](#authentication)                                                                                | No       | `GITHUB_PERSONAL_ACCESS_TOKEN` |                       |
 
 #### Webhook event `client_payload`
 

@@ -8,6 +8,11 @@ parameters:
   event_type:
     type: string
     description: "The ['event_type'](https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-a-repository-dispatch-event) parameter to send"
+  github_personal_access_token:
+    type: env_var_name
+    description: "A GitHub 'Personal Access Token' (PAT) with the `repo` scope"
+    default: GITHUB_PERSONAL_ACCESS_TOKEN
+
 steps:
   - run:
       when: always
@@ -24,9 +29,6 @@ steps:
             "vcs_revision": env.CIRCLE_SHA1,
             "reponame": env.CIRCLE_PROJECT_REPONAME,
             "workflow_id": env.CIRCLE_WORKFLOW_ID,
-            "workflow_url": ("https://circleci.com/workflow-run/" + env.CIRCLE_WORKFLOW_ID),
             "pull_request": env.CI_PULL_REQUEST,
-            "user": env.CIRCLE_USERNAME,
-            "api_link":("https://circleci.com/api/v1.1/project/" + env.CIRCLE_PROJECT_USERNAME + "/" + env.CIRCLE_PROJECT_REPONAME + "/" + env.CIRCLE_BUILD_NUM),
           }
-        }' | curl -X POST -H "Content-Type:application/json" -d - "https://api.github.com/repos/<<parameters.repo_name>>/dispatches"
+        }' | curl -X POST -H "Content-Type:application/json" -H "Accept:application/vnd.github.v3+json" -H "Authorization: token <<parameters.github_personal_access_token>>" -d - "https://api.github.com/repos/<<parameters.repo_name>>/dispatches"

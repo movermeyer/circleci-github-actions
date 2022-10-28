@@ -56,6 +56,7 @@ This sends a [`repository_dispatch`](https://docs.github.com/en/free-pro-team@la
 | repo_name                    | The organization and repo name to trigger the `repository_dispatch` event for                                                                                                                          | Yes      | N/A                            | `octocat/hello-world` |
 | event_type                   | The ['event_type'](https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-a-repository-dispatch-event) parameter to send. Arbitry string that GitHub Actions can use to filter on | Yes      | N/A                            | `octocat/hello-world` |
 | github_personal_access_token | The name of the environment variable containing the GitHub Personal Access Token. See [Authentication](#authentication)                                                                                | No       | `GITHUB_PERSONAL_ACCESS_TOKEN` |                       |
+| metadata            | Add any metadata that you should provide to GitHub Action                                                                                                                                                       | No       | N/A                            | `{ "field_1": "value" }` |
 
 #### Webhook event `client_payload`
 
@@ -89,6 +90,7 @@ These are simply copied from the various CircleCI environment variables.
     "vcs_revision": "46f3ff30f669ec61194f6010d4a8adf98a71b29a",
     "reponame": "octokit_test",
     "workflow_id": "c1b6618e-a6ea-4ce7-a907-74763b5bdd31",
-  }
+  },
+  "metadata": { "field_1": "value" }
 }
 ```

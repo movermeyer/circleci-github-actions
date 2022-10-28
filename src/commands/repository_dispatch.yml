@@ -12,6 +12,10 @@ parameters:
     type: env_var_name
     description: "The environment variable name containing a GitHub 'Personal Access Token' (PAT) with the `repo` scope"
     default: GITHUB_PERSONAL_ACCESS_TOKEN
+  metadata:
+    type: string
+    description: "Send any payload through this field. For example: `{'version': '0.1.0'}`"
+    default: null
 
 steps:
   - run:
@@ -30,5 +34,6 @@ steps:
             "reponame": env.CIRCLE_PROJECT_REPONAME,
             "workflow_id": env.CIRCLE_WORKFLOW_ID,
             "pull_request": env.CI_PULL_REQUEST,
+            "metadata": <<parameters.metadata>>
           }
         }' | curl -X POST -H "Content-Type:application/json" -H "Accept:application/vnd.github.v3+json" -H "Authorization: token $<<parameters.github_personal_access_token>>" -d @- "https://api.github.com/repos/<<parameters.repo_name>>/dispatches"
